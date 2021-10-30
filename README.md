@@ -11,6 +11,8 @@ sudo docker run \
   -e PORT=5000 \
   -e CERVER_RECEIVE_BUFFER_SIZE=4096 -e CERVER_TH_THREADS=4 \
   -e CERVER_CONNECTION_QUEUE=4 \
+  -e MONGO_APP_NAME=push -e MONGO_DB=worker \
+  -e MONGO_URI=mongodb://push:password@mongo:27017/worker \
   -e CONNECT_TO_REDIS=true -e REDIS_HOSTNAME=redis \
   ermiry/push-service:development /bin/bash
 ```
