@@ -19,6 +19,7 @@
 #include "version.h"
 
 #include "routes/service.h"
+#include "routes/transactions.h"
 
 static Cerver *push_service = NULL;
 
@@ -49,7 +50,7 @@ static void push_set_service_routes (HttpCerver *http_cerver) {
 	/*** top level route ***/
 
 	// GET /api/push
-	HttpRoute *main_route = http_route_create (REQUEST_METHOD_GET, "api/", push_main_handler);
+	HttpRoute *main_route = http_route_create (REQUEST_METHOD_GET, "api/push", push_main_handler);
 	http_cerver_route_register (http_cerver, main_route);
 
 	// HEAD /api/push
@@ -63,6 +64,10 @@ static void push_set_service_routes (HttpCerver *http_cerver) {
 
 	// HEAD /api/push/version
 	http_route_set_handler (version_route, REQUEST_METHOD_HEAD, push_version_handler);
+
+	// POST /api/push/transaction
+	HttpRoute *create_trans_route = http_route_create (REQUEST_METHOD_POST, "transaction", service_transaction_create_handler);
+	http_route_child_add (main_route, create_trans_route);
 
 }
 
@@ -138,7 +143,7 @@ int main (int argc, char const **argv) {
 	}
 
 	else {
-		cerver_log_error ("Failed to init push!");
+		cerver_log_error ("Failed to init service!");
 	}
 
 	service_end ();
