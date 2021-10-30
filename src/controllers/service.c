@@ -28,7 +28,7 @@ static unsigned int push_service_init_responses (void) {
 	);
 
 	push_works = http_response_json_key_value (
-		HTTP_STATUS_OK, "msg", "Gepp  works!"
+		HTTP_STATUS_OK, "msg", "Push service works!"
 	);
 
 	char version[VERSION_BUFFER_SIZE] = { 0 };
